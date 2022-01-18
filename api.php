@@ -53,4 +53,12 @@
       $items = self::$_storage->get($itemsId);
       return $items;
     }
+
+    function post() {
+      $data = file_get_contents("php://input");
+      $items = json_decode($data, true);
+
+      $result = self::$_storage->add($items);
+      return $result;
+    }
   }
