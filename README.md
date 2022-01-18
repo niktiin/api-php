@@ -52,7 +52,7 @@ cd api-php
 <a name="items">
 <br>
 
-## Items
+>## Items
 </a>
 
  Items identified by their heads, which are unique integers, and live under v0/api/items/{id}.
@@ -274,7 +274,7 @@ API responce:
 
 <a name="credits">
 
-## Credits
+>## Credits
 </a>
 
 ### [niktiin](https://github.com/niktiin)
@@ -285,7 +285,7 @@ API responce:
 
 <a name="license">
 
-## License
+>## License
 </a>
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
