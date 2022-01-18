@@ -2,7 +2,7 @@
 
 <a name="overview">
 
-## Contents
+>## Contents
 </a>
 
 ### [1. Overview](#overview)
@@ -13,20 +13,23 @@
 ### [6. Credits](#credits)
 ### [7. License](#license)
 
----
-
-<a name="overview">
 <br>
 
-## Overview
+---
+<br>
+<a name="overview">
+
+>## Overview
 </a>
  Api written in the php programming language for processing store products.
+
+<br>
 
 ---
 <a name="versioning">
 <br>
 
-## URI and Versioning
+>## URI and Versioning
 </a>
 
 We hope to improve the API over time. The changes won't always be backward compatible, so we're going to use versioning. This first iteration will have URIs prefixed with http://localhost:3000/v0/api and is structured as described below. There is currently no rate limit.
@@ -36,7 +39,7 @@ We hope to improve the API over time. The changes won't always be backward compa
 <a name="installation">
 <br>
 
-## Installation
+>## Installation
 </a>
 
 ```text
@@ -52,58 +55,45 @@ cd api-php
 ## Items
 </a>
 
- Items identified by their heads, which are unique integers, and live under /api/items/{id}.
+ Items identified by their heads, which are unique integers, and live under v0/api/items/{id}.
 
 property|type|description
 ---|---|---
-name|String|name of the item.
-price|Nubmer|price of the item.
-discount|Number| discount of the item. Number 0 - 100.
-images|Array|image urls array.
-feedback|Array|user reviews array.
-description|String|description of the item.
-cat|String|item category.
-id|Nubmer|item id (read-only)
+name|String|-
+price|Integer|-
+discount|Integer (0 -100)|-
+images|Array|URLs
+feedback|Array|reviews
+description|Integer|-
+cat|String|category
+id|Integer| property read-only
 
-For example, http://localhost:3000/v0/api/items/0
+
+**For example, http://localhost:3000/v0/api/items/0**
+
+<br>
 
 ---
+<br>
 
 <a name="request">
-<br>
 
-## Request
+>## Methods
 </a>
 
-### 2. Method GET (Get item)
-<br>
-URL : <a>
-  http://localhost:3000/v0/api/items
-</a>
-or 
-<a>
-  http://localhost:3000/v0/api/items/{id}
-</a>
-<br>
-<br>
+### **1. GET**
+URL : <a>http://localhost:3000/v0/api/items</a>
 
+*You can also use the id parameter to get a specific item
+
+<br>
 Required parameters:
+  
+property|type
+---|---
+id|Integer
 
-#### 1. In URL parameters:
-
-  property|type
-  ---|---
-  id|Number
-
-
-
-#### Request example:
-
-URL : <a>
-  http://localhost:3000/v0/api/items/1
-  </a>
-
-Responce: 
+API responce: 
 
 ```JSON
 {
@@ -125,33 +115,22 @@ Responce:
 ```
 <br>
 
-### 2. Method POST (Create item)
+### **2. POST**
+URL : <a>http://localhost:3000/v0/api/items</a>
+
 <br>
-URL : <a>
-  http://localhost:3000/v0/api/items
-</a>
-<br>
-<br>
+<span style="color:orange">Strictly</span> required body parameters:
 
-Strictly required parameters:
+  property|type
+  ---|---
+  name|String
+  price|Integer
+  discount|Integer
+  images|Array
+  feedback|Array
+  description|String
+  cat|String
 
-#### 1. In body parameters:
-
-  property|type|description
-  ---|---|---
-  name|String|-
-  price|Nubmer|-
-  discount|Number| discount of the item. Number 0 - 100.
-  images|Array|links to images
-  feedback|Array|user reviews
-  description|String|-
-  cat|String|category
-
-#### Request example:
-
-URL : <a>
-  http://localhost:3000/v0/api/items
-  </a>
 
 ```JSON
 {
@@ -165,7 +144,7 @@ URL : <a>
 }
 ```
 
-Responce: 
+API responce: 
 
 ```JSON
 {
@@ -187,38 +166,36 @@ Responce:
 ```
 <br>
 
-### 3. Method PUT (Update item)
+### **3. PUT**
+URL : <a>http://localhost:3000/v0/api/items/{id}</a>
+
 <br>
-URL : <a>
-  http://localhost:3000/v0/api/items/{id}
-</a>
-<br>
+<span style="color:orange">Strictly</span> required parameters:
+
 <br>
 
-Strictly required parameters:
-#### 1. In URL parameters:
+1. <div>
+    In URL parameters:
 
-  property|type
-  ---|---
-  id|Number
+    property|type
+    ---|---
+    id|Number
+  </div>
 
-#### 2. In body parameters:
+2. <div>
+    In body parameters:
 
-  property|type|description
-  ---|---|---
-  name|String|-
-  price|Nubmer|-
-  discount|Number| discount of the item. Number 0 - 100.
-  images|Array|links to images
-  feedback|Array|user reviews
-  description|String|-
-  cat|String|category
+    property|type
+    ---|---
+    name|String
+    price|Integer
+    discount|Integer
+    images|Array
+    feedback|Array
+    description|String
+    cat|String
+   </div>
 
-#### Request example:
-
-URL : <a>
-  http://localhost:3000/v0/api/items/2
-  </a>
 
 ```JSON
 {
@@ -232,7 +209,7 @@ URL : <a>
 }
 ```
 
-Responce: 
+API responce: 
 
 ```JSON
 {
@@ -254,29 +231,24 @@ Responce:
 ```
 <br>
 
-### 4. Method DELETE (Delete item)
+### **4. DELETE**
+URL : <a>http://localhost:3000/v0/api/items/{id}</a>
+
 <br>
-URL : <a>
-  http://localhost:3000/v0/api/items/{id}
-</a>
-<br>
+<span style="color:orange">Strictly</span> required parameters:
+
 <br>
 
-Strictly required parameters:
-#### 1. In URL parameters:
+1. <div>
+    In URL parameters:
 
-  property|type
-  ---|---
-  id|Number
+    property|type
+    ---|---
+    id|Number
+   </div>
 
 
-#### Request example:
-
-URL : <a>
-  http://localhost:3000/v0/api/items/2
-  </a>
-
-Responce: 
+API responce: 
 
 ```JSON
 {
