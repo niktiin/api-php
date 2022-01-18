@@ -23,7 +23,6 @@
       }
       return self::$_instance;
     }
-
     /**
      * Calling the appropriate methods and works with the storage class.
      * @throws NoValidRequestException — if route not allowed
@@ -37,7 +36,6 @@
       }
       throw new NoValidRequestException("Method '".$route['method']."' not allowed", 405); 
     }
-
     /**
      * Implementation of method get
      * @throws NoValidRequestException — if property 'id' unncorect
@@ -53,7 +51,6 @@
       $items = self::$_storage->get($itemsId);
       return $items;
     }
-
     /**
      * Implementation of method post
      * @todo check items data
@@ -65,7 +62,6 @@
       $result = self::$_storage->add($items);
       return $result;
     }
-
     /**
      * Implementation of method put
      * @todo check items data
@@ -85,6 +81,24 @@
       $items = json_decode($data, true)[0];
       
       $result = self::$_storage->update($items, $itemsId);
+      return $result;
+    }
+    /**
+     * Implementation of method delete
+     * @throws NoValidRequestException — Unncorect property 'ID' or property 'ID' undifined
+     * @return array — return processed array of item parameters
+     */ 
+    function delete() {
+      // Get additional parameters
+      $itemsId = self::$_instance->route['props'][0];
+      if (count(self::$_instance->route['props']) > 0 && !is_numeric($itemsId)) {
+        throw new NoValidRequestException("Unncorect property 'ID'", 405);
+      }
+      if (count(self::$_instance->route['props']) < 1) {
+        throw new NoValidRequestException("property 'ID' undifined", 405);
+      }
+      
+      $result = self::$_storage->delete($itemsId);
       return $result;
     }
   }

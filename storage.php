@@ -112,5 +112,35 @@
       fclose ($handle);
       return $items;
     }
+
+    /**
+     * Implementation of method delete
+     * @param number $itemsId — item parameter, id
+     * @throws NoValidRequestException — items with id no exists
+     * @return array — Return processed array of item parameters 
+     */
+    function delete($itemsId) {
+      // Read database file
+      $handle = fopen ('storage/'.self::$_database.'.txt',"r+") or $error = true;
+      $data = file_get_contents('storage/'.self::$_database.'.txt');
+
+      // If the storage is empty an array is created
+      $unserializeData = $data ? unserialize($data) : [];
+      foreach ($unserializeData as $key => $value) {
+        if ($value['id'] == $itemsId) {
+          $items = $unserializeData[$key];
+          unset($unserializeData[$key]);
+          break;
+        }
+      }
+      if (!isset($items)) {
+        throw new NoValidRequestException("items with id '$itemsId' no exists", 500);
+      }
+      // Serialize and write data
+      $serializeData = serialize($unserializeData);
+      fwrite($handle, $serializeData);
+      fclose ($handle);
+      return $items;
+    }
   }
 
