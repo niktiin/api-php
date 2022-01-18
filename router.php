@@ -9,7 +9,11 @@ class Router {
   }
   private function __wakeup() {
   }
-  // Init and link storage
+  /**
+   * Single class
+   * @param [object] $storage — object to use database 
+   * @return [object] — self
+   */
   static function getInstance() {
     if (self::$_instance === null) {
         self::$_instance = new self; 
@@ -21,6 +25,7 @@ class Router {
    * Routing class
    * Checks the correspondence of the route and parses the request parameters
    * @var    [string] $route — request route, use to routing
+   * @throws NoValidRequestException — if route empty or route not allowed
    * @return [array] — returns the url, method and parameters
    */
   function route () {

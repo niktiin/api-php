@@ -26,9 +26,8 @@
 
     /**
      * Calling the appropriate methods and works with the storage class.
+     * @throws NoValidRequestException — if route not allowed
      * @param  [array] $route — url, method and parameters
-     * @return [object] — self method
-     * throws  NoValidRequestException — if route not allowed or unncorect id
      */
     function use($route = null) {
       if (method_exists(self::$_instance,$route['method'])) {
@@ -40,9 +39,9 @@
     }
 
     /**
-     * Undocumented function
-     *
-     * @return void
+     * Implementation of method get
+     * @throws NoValidRequestException — if property 'id' unncorect
+     * @return [string] — return items array or empty array
      */    
     function get() {
       // Get additional parameters
