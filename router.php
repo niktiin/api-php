@@ -20,8 +20,8 @@ class Router {
   /**
    * Routing class
    * Checks the correspondence of the route and parses the request parameters
-   * @var route — R
-   * @return array — returns the url, method and parameters
+   * @var    [string] $route — request route, use to routing
+   * @return [array] — returns the url, method and parameters
    */
   function route () {
     self::$_instance->url = array_slice(explode('/', $_SERVER['REQUEST_URI']), 1);
