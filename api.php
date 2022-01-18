@@ -54,11 +54,37 @@
       return $items;
     }
 
+    /**
+     * Implementation of method post
+     * @todo check items data
+     * @return array — return processed array of item parameters
+     */   
     function post() {
       $data = file_get_contents("php://input");
-      $items = json_decode($data, true);
-
+      $items = json_decode($data, true)[0];
       $result = self::$_storage->add($items);
+      return $result;
+    }
+
+    /**
+     * Implementation of method put
+     * @todo check items data
+     * @return array — return processed array of item parameters
+     */ 
+    function put() {
+      // Get additional parameters
+      $itemsId = self::$_instance->route['props'][0];
+      if (count(self::$_instance->route['props']) > 0 && !is_numeric($itemsId)) {
+        throw new NoValidRequestException("Unncorect property 'ID'", 405);
+      }
+      if (count(self::$_instance->route['props']) < 1) {
+        throw new NoValidRequestException("property 'ID' undifined", 405);
+      }
+
+      $data = file_get_contents("php://input");
+      $items = json_decode($data, true)[0];
+      
+      $result = self::$_storage->update($items, $itemsId);
       return $result;
     }
   }

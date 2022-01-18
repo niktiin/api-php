@@ -74,8 +74,38 @@
       $unserializeData = $data ? unserialize($data) : [];
       $length = count($unserializeData);
       $items['id'] = $length++;
-      array_push($unserializeData, json_encode($items));
+      array_push($unserializeData, $items);
 
+      // Serialize and write data
+      $serializeData = serialize($unserializeData);
+      fwrite($handle, $serializeData);
+      fclose ($handle);
+      return $items;
+    }
+
+    /**
+     * Implementation of method add
+     * @param array $items — Request items properties
+     * @param number $itemsId — item parameter, id
+     * @return array — Return processed array of item parameters
+     * @todo Validation items
+     */
+    function update($items, $itemsId) {
+      // Read database file
+      $handle = fopen ('storage/'.self::$_database.'.txt',"r+") or $error = true;
+      $data = file_get_contents('storage/'.self::$_database.'.txt');
+
+      // If the storage is empty an array is created
+      $unserializeData = $data ? unserialize($data) : [];
+      foreach ($unserializeData as $key => $value) {
+        if ($value['id'] == $itemsId) {
+          // Updating information other than id
+          $unserializeData[$key] = $items;
+          $unserializeData[$key]['id'] = $itemsId;
+          $items = $unserializeData[$key];
+          break;
+        }
+      }
       // Serialize and write data
       $serializeData = serialize($unserializeData);
       fwrite($handle, $serializeData);
