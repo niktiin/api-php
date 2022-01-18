@@ -37,7 +37,7 @@ class Router {
     }
 
     if (!$route) {
-      throw new NoValidRequestException("Route empty", 405); 
+      throw new NoValidRequestException("Forbidden", 403); 
     }
     if ($route != 'items') {
       throw new NoValidRequestException("Route '".strtoupper($route)."' not allowed", 405); 
