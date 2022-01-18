@@ -1,7 +1,9 @@
 <?php
-  interface iStorage {
-    function get($itemId);
-  };
+
+  // Set exception class
+  class NoValidItemsException extends Exception {
+      
+  }
 
   class Storage{
     protected static $_instance;
@@ -59,6 +61,36 @@
       }
     }
 
+    function valid($items) {
+      $default = array(
+        'name' => '',
+        'price' => 0,
+        'discount' => 0,
+        'feedback' => [],
+        'images' => [],
+        'cat' => ''
+      );
+      //Protection against unregistered changes
+      if (isset($items['id'])) {
+        throw new NoValidItemsException("Property 'id' is read-only", 405);
+      }
+      if (count($items) != count($default)) {
+        throw new NoValidItemsException("The number of properties exceeds the allowed number", 405);
+      }
+      //Protection
+      foreach ($default as $key => $value) {
+        if (!isset($items[$key])) {
+          throw new NoValidItemsException("Property $key is undifined", 405);
+        }
+        if (gettype($value) != gettype($items[$key])) {
+          throw new NoValidItemsException("the data type to property $key is not supported", 405);
+        }
+        $default[$key] = $items[$key];
+      }
+
+      return $items;
+    }
+
     /**
      * Implementation of method add
      * @param array $items — Request items properties
@@ -66,6 +98,8 @@
      * @todo Validation items
      */
     function add($items) {
+      // Validation items
+      $this->valid($items);
       // Read database file
       $handle = fopen ('storage/'.self::$_database.'.txt',"r+") or $error = true;
       $data = file_get_contents('storage/'.self::$_database.'.txt');
@@ -91,6 +125,8 @@
      * @todo Validation items
      */
     function update($items, $itemsId) {
+      // Validation items
+      $this->valid($items);
       // Read database file
       $handle = fopen ('storage/'.self::$_database.'.txt',"r+") or $error = true;
       $data = file_get_contents('storage/'.self::$_database.'.txt');

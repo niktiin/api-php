@@ -19,7 +19,7 @@ try {
   $items = $api->use($route);
   $responce = new Responce(200, '', 'OK', $items);
   echo $responce();
-} catch (NoValidRequestException $e) {
+} catch (NoValidRequestException | NoValidItemsException $e) {
   $responce = new Responce($e->getCode(), $e->getMessage(), 'INVALID_REQUEST');
   echo $responce();
 }
