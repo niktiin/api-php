@@ -51,7 +51,7 @@
         throw new NoValidRequestException("Unncorect property 'ID'", 405);
       }
 
-      //$items = self::$_storage->get($itemsId);
-      return array(); //$items;
+      $items = self::$_storage->get($itemsId);
+      return $items;
     }
   }
